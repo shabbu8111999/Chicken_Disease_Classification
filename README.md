@@ -2,17 +2,17 @@
 
 
 ## How to Run
-### Steps:
 
-Clone the Repository
+### Step 1:Clone the Repository
+
 ```bash
 https://github.com/
 ```
 
-### Step 1: Create a conda Environment after opening the repository
+### Step 2: Create a conda Environment after opening the repository
 
 ```bash
-conda create -n cnncls python=3.8 -y
+conda create -n cnncls python=3.10 -y
 ```
 
 ```bash
@@ -20,7 +20,7 @@ conda activate cnncls
 ```
 
 
-### Step 2: Install the Requirements
+### Step 3: Install the Requirements
 ```bash
 pip install -r requirements.txt
 ```
