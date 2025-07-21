@@ -1,5 +1,5 @@
 
-FROM python:3.10-slim
+FROM python:3.10.18-slim-bullseye
 
 # Install system dependencies
 RUN apt-get update && \
