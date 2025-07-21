@@ -1,4 +1,4 @@
-FROM python:3.10-slim-buster
+FROM python:3.10-slim-bullseye
 
 # Install required system packages for awscli and unzip
 RUN apt-get update && \
@@ -8,17 +8,13 @@ RUN apt-get update && \
     ./aws/install && \
     rm -rf awscliv2.zip aws
 
-# Set the working directory
 WORKDIR /app
 
-# Copy all project files
 COPY . /app
 
-# Install Python dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Set default command
 CMD ["python3", "app.py"]
 
 
