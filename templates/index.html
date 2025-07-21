@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CNN Image Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧠 CNN Image Classifier</h1>
+      <p style="font-weight: 600;">Upload an image of a Chicken's Fecal to detect Coccidiosis</p>
+    </header>
+
+    <section class="upload-section">
+      <input type="file" id="imageInput" accept="image/*">
+      <img id="preview" alt="Image Preview" hidden />
+      <button onclick="submitImage()" id="predictBtn">🔍 Predict</button>
+      <div class="loader" id="loader" hidden></div>
+    </section>
+
+    <section class="result-section" id="resultBox" hidden>
+      <h2>🔎 Prediction Result:</h2>
+      <p id="predictionText"></p>
+    </section>
+
+    <footer>
+      <p style="font-weight: 800;">&copy; 2025 | Project Developed and Deployed by Shabareesh Nair | AI & CNN Powered</p>
+    </footer>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const predictionText = document.getElementById('predictionText');
+    const resultBox = document.getElementById('resultBox');
+    const loader = document.getElementById('loader');
+    const predictBtn = document.getElementById('predictBtn');
+
+    imageInput.addEventListener('change', () => {
+      const file = imageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          preview.src = reader.result;
+          preview.hidden = false;
+          resultBox.hidden = true;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function submitImage() {
+      const file = imageInput.files[0];
+      if (!file) {
+        alert("⚠️ Please select an image first!");
+        return;
+      }
+
+      loader.hidden = false;
+      predictionText.textContent = "";
+      resultBox.hidden = true;
+      predictBtn.disabled = true;
+      predictBtn.textContent = "Predicting...";
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result.split(',')[1];
+        fetch('/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: base64 })
+        })
+        .then(res => res.json())
+        .then(data => {
+          loader.hidden = true;
+          predictBtn.disabled = false;
+          predictBtn.textContent = "🔍 Predict";
+
+          if (data[0]?.image) {
+            predictionText.textContent = `✅ Result: ${data[0].image}`;
+            resultBox.hidden = false;
+          } else {
+            predictionText.textContent = "❌ Unexpected format from server.";
+            resultBox.hidden = false;
+          }
+        })
+        .catch(err => {
+          loader.hidden = true;
+          predictBtn.disabled = false;
+          predictBtn.textContent = "🔍 Predict";
+          predictionText.textContent = "❌ Error during prediction!";
+          resultBox.hidden = false;
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
+</body>
+</html>
