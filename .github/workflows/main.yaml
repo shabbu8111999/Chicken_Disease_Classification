@@ -91,9 +91,12 @@ jobs:
         run: |
          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
          
-      - name: Stop and remove old container if exists
-        run: |
-         docker ps -q --filter "name=cnncls" | grep -q . && docker stop cnncls && docker rm -fv cnncls || echo "No existing container"
+      # This should be uncommented first time trying to deploy 
+      # In second time comment it because it will automatically analyze this code
+      
+     # - name: Stop and remove old container if exists
+      #  run: |
+       #  docker ps -q --filter "name=cnncls" | grep -q . && docker stop cnncls && docker rm -fv cnncls || echo "No existing container"
        
       - name: Run Docker Image to serve users
         run: |

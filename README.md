@@ -107,25 +107,3 @@ AWS_REGION = ap-south-1
 AWS_ECR_LOGIN_URI = 796586191671.dkr.ecr.ap-south-1.amazonaws.com/dlproj
 
 ECR_REPOSITORY_NAME = dlproj
-
-
-# AZURE-CICD-Deployment-with-Github-Actions
-
-## Save pass:
-
-
-
-## Run from terminal:
-
-
-
-
-
-
-
-
-## Deployment Steps:
-1. Build the Docker image of the Source Code
-2. Push the Docker image to Container Registry
-3. Launch the Web App Server in Azure
-4. Pull the Docker image from the container registry to Web App server and run
