@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 
 class PredictionPipeline:
-    MODEL_PATH = os.path.join("artifacts", "training", "model.h5")
+    MODEL_PATH = os.path.join("model", "model.h5")
     TARGET_SIZE = (224, 224)
     LABELS = {0: "Coccidiosis", 1: "Healthy"}
 

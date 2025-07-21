@@ -1,5 +1,7 @@
 import tensorflow as tf
 from pathlib import Path
+import shutil
+import os
 from CnnClassifier.config.configuration import TrainingConfig
 
 
@@ -87,3 +89,12 @@ class Training:
             path = self.config.trained_model_path,
             model = self.model
         )
+
+
+source_file = "artifacts/training/model.h5"
+destination_dir = "model"
+
+os.makedirs(destination_dir, exist_ok=True)
+
+shutil.copy(source_file, destination_dir)
+print(f"file copied to {destination_dir}")
